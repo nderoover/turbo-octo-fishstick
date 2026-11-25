@@ -1,55 +1,12 @@
-const readline = require("node:readline");
+const a = 10;
+const b = 5;
 
-const interfaceLecture = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-const lignes = interfaceLecture[Symbol.asyncIterator]();
+console.log("Addition :", a + b);
+console.log("Soustraction :", a - b);
+console.log("Multiplication :", a * b);
 
-async function demander(question) {
-    process.stdout.write(question);
-    const { value } = await lignes.next();
-    return value ?? "";
+if (b !== 0) {
+    console.log("Division :", a / b);
+} else {
+    console.log("Division impossible : division par zéro.");
 }
-
-async function calculatrice() {
-    let continuer = "Oui";
-
-    while (continuer.toLowerCase() === "oui") {
-        const a = Number(await demander("Entrez le premier nombre : "));
-        const b = Number(await demander("Entrez le deuxième nombre : "));
-        const operation = await demander("Choisissez une opération (+, -, *, /) : ");
-
-        if (!Number.isFinite(a) || !Number.isFinite(b)) {
-            console.log("Erreur : veuillez entrer des nombres valides.");
-        } else {
-            switch (operation) {
-                case "+":
-                    console.log("Résultat :", a + b);
-                    break;
-                case "-":
-                    console.log("Résultat :", a - b);
-                    break;
-                case "*":
-                    console.log("Résultat :", a * b);
-                    break;
-                case "/":
-                    if (b !== 0) {
-                        console.log("Résultat :", a / b);
-                    } else {
-                        console.log("Erreur : division par zéro");
-                    }
-                    break;
-                default:
-                    console.log("Opération invalide");
-            }
-        }
-
-        continuer = await demander("Voulez-vous effectuer un autre calcul ? (Oui/Non) ");
-    }
-
-    console.log("Merci d'avoir utilisé notre calculatrice !");
-    interfaceLecture.close();
-}
-
-calculatrice();
